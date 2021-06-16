@@ -15,8 +15,12 @@ class UsersController < ApplicationController
 
   def update
     user = User.find(current_user.id)
-    user.update(user_prams)
-    redirect_to user_path(user)
+    if user.update(user_prams)
+      redirect_to user_path(user), notice: "You have updated user successfully."
+    else
+      @user = user
+      render :edit
+    end
   end
 
  private
